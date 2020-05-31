@@ -85,6 +85,8 @@ namespace Harmony.Models
         // public List<SelectListItem> VenueList { get; set; }
         [Display(Name = "Rating")]
         public double AveRating { get; set; }
+
+        public SelectList VenueList { get; set; }
     }
 
     public class MusicianDetailViewModel

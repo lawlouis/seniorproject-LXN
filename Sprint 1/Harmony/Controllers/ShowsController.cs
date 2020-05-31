@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 
 namespace Harmony.Controllers
 {
+    [Authorize]
     public class ShowsController : Controller
     {
         private HarmonyContext db = new HarmonyContext();
@@ -92,8 +93,88 @@ namespace Harmony.Controllers
             }
             User_Show user_Show = db.User_Show.Where(u => u.ShowID == id).First();
             ShowsViewModel viewModel = new ShowsViewModel(user_Show);
-            
+            viewModel.VenueList = new SelectList(db.Venues.Where(s => s.UserID == show.Venue.UserID), "ID", "VenueName");
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int? id, ShowsViewModel viewModel)
+        {
+            // No user id passed through
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Show show = db.Shows.Find(id);
+
+            // If users doesn't exisit
+            if (show == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Viewmodel for Show
+            ShowsViewModel model = new ShowsViewModel(show);
+
+            var IdentityID = User.Identity.GetUserId();
+            model.VenueList = new SelectList(db.Venues.Where(s => s.UserID == show.Venue.UserID), "ID", "VenueName");
+
+            if (ModelState.IsValid)
+            {
+                // Get user's calendar credentials
+                UserCredential credential = await GetCredentialForApiAsync();
+                // Create Google Calendar API service.
+                var service = new CalendarService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = "Harmony",
+                });
+
+                // Fetch the list of calendars.
+                var calendars = await service.CalendarList.List().ExecuteAsync();
+                // create a new event to google calendar
+                if (calendars != null)
+                {
+                    Event updatedEvent = new Event()
+                    {
+                        Summary = viewModel.Title,
+                        Description = viewModel.Description,
+                        Location = db.Venues.Find(viewModel.VenueID).VenueName,
+                        Start = new EventDateTime()
+                        {
+                            DateTime = viewModel.StartTime.AddHours(7.0),
+                            TimeZone = "America/Los_Angeles"
+                        },
+                        End = new EventDateTime()
+                        {
+                            DateTime = viewModel.EndTime.AddHours(7.0),
+                            TimeZone = "America/Los_Angeles"
+                        },
+                        Attendees = new List<EventAttendee>()
+                        {
+                            new EventAttendee() { Email = show.Venue.User.Email },
+                            new EventAttendee() { Email = db.Users.Where(u => u.ID == model.MusicianID).FirstOrDefault().Email }
+                        }
+                    };
+                    var newEventRequest = service.Events.Update(updatedEvent, "primary", show.GoogleEventID);
+                    // This allows attendees to get email notification
+                    newEventRequest.SendNotifications = true;
+                    var eventResult = newEventRequest.Execute();
+
+                    // add the new show to db
+                    show.Title = viewModel.Title;
+                    show.StartDateTime = viewModel.StartTime;
+                    show.EndDateTime = viewModel.EndTime;
+                    show.Description = viewModel.Description;
+                    show.VenueID = viewModel.VenueID;
+                    db.SaveChanges();
+
+                    return RedirectToAction("Details", new { id = model.ShowID });
+                }
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -303,91 +384,6 @@ namespace Harmony.Controllers
 
             return RedirectToAction("MyShows");
         }
-
-        // GET: Shows/Create
-        public ActionResult Create()
-        {
-            ViewBag.VenueID = new SelectList(db.Venues, "ID", "VenueName");
-            return View();
-        }
-
-        // POST: Shows/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,StartDateTime,EndDateTime,VenueID,Description,DateBooked")] Show show)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Shows.Add(show);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.VenueID = new SelectList(db.Venues, "ID", "VenueName", show.VenueID);
-            return View(show);
-        }
-
-        // GET: Shows/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Show show = db.Shows.Find(id);
-            if (show == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.VenueID = new SelectList(db.Venues, "ID", "VenueName", show.VenueID);
-            return View(show);
-        }
-
-        // POST: Shows/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,StartDateTime,EndDateTime,VenueID,Description,DateBooked")] Show show)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(show).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.VenueID = new SelectList(db.Venues, "ID", "VenueName", show.VenueID);
-            return View(show);
-        }
-
-        // GET: Shows/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Show show = db.Shows.Find(id);
-            if (show == null)
-            {
-                return HttpNotFound();
-            }
-            return View(show);
-        }
-
-        // POST: Shows/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Show show = db.Shows.Find(id);
-            db.Shows.Remove(show);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -61,45 +61,109 @@
                 <dd>
                     @Html.DisplayFor(model => model.Description)
                 </dd>
-
-                @if (Model.Status == "Accepted")
-                {
-                    <dd>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#cancelModal">
-                            Cancel This Show!
-                        </button>
-                    </dd>
-                }
             </dl>
-        </div>
-        <p>
-            @Html.ActionLink("Back to List", "MyShows")
-        </p>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cancelModalLabel">Cancel This Show</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+            <hr />
+            <p>
+                @Html.ActionLink("Back to List", "MyShows")
+            </p>
+            @if (Model.Status == "Accepted")
+            {
+                <div class="text-lg-right">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#cancelModal">
+                        Cancel This Show!
+                    </button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-sm btn-orange" data-toggle="modal" data-target="#editModal">
+                        Edit
                     </button>
                 </div>
-                <div class="modal-body">
-                    Are you sure you want to cancel this show?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    @using (Html.BeginForm("Cancel", "Shows", new { id = Model.ShowID }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        <button type="submit" class="btn btn-warning">
-                            Yes
-                        </button>
-                    }
-                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">Cancel This Show</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                Are you sure you want to cancel this show?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                @using (Html.BeginForm("Cancel", "Shows", new { id = Model.ShowID }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <button type="submit" class="btn btn-warning">
+                        Yes
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit-modal-label">Edit this event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @using (Html.BeginForm("Edit", "Shows", new { id = Model.ShowID }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-12">
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.StartTime, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(m => m.StartTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                            @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.EndTime, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(m => m.EndTime, new { htmlAttributes = new { @class = "form-control", type = "datetime-local" } })
+                            @Html.ValidationMessageFor(m => m.EndTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.VenueID, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-12">
+                            @*Html.TextBoxFor(m => m.VenueID, htmlAttributes: new { @class = "form-control" })*@
+                            @Html.DropDownList("VenueID", Model.VenueList, "-Select Venues-", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-12">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-orange">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 </div>
