@@ -53,13 +53,6 @@ namespace Harmony
             var token = await dataStore.GetAsync<TokenResponse>(userId);
             return new UserCredential(flow, userId, token);
         }
-        
-        // GET: Venues
-        public ActionResult Index()
-        {
-            var venues = db.Venues.Include(v => v.User).Include(v => v.VenueType);
-            return View(venues.ToList());
-        }
 
         /************************************
          *           VENUE PROFILE
@@ -83,7 +76,7 @@ namespace Harmony
 
             VenueOwnerDetailViewModel viewModel = new VenueOwnerDetailViewModel(venue);
             viewModel.UpcomingShows = db.User_Show.Where(u => u.VenueOwnerID == venue.UserID).Select(s => s.Show).Where(s => s.StartDateTime > DateTime.Now && s.Status == "Accepted").OrderByDescending(s => s.EndDateTime).ToList();
-
+            viewModel.VenueList = new SelectList(db.Venues.Where(v => v.User.ID == venue.ID), "ID", "VenueName");
             return View(viewModel);
         }
 
@@ -109,6 +102,7 @@ namespace Harmony
             VenueOwnerDetailViewModel model = new VenueOwnerDetailViewModel(venue);
 
             var IdentityID = User.Identity.GetUserId();
+            viewModel.VenueList = new SelectList(db.Venues.Where(v => v.User.ID == venue.ID), "ID", "VenueName");
 
             if (ModelState.IsValid)
             {
@@ -184,107 +178,6 @@ namespace Harmony
 
             return View(model);
         }
-
-        // GET: Venues/Create
-        public ActionResult Create()
-        {
-            ViewBag.UserID = new SelectList(db.Users, "ID", "FirstName");
-            ViewBag.VenueTypeID = new SelectList(db.VenueTypes, "ID", "TypeName");
-            return View();
-        }
-
-        // POST: Venues/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,VenueName,AddressLine1,AddressLine2,City,State,ZipCode,VenueTypeID,UserID")] Venue venue)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Venues.Add(venue);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.UserID = new SelectList(db.Users, "ID", "FirstName", venue.UserID);
-            ViewBag.VenueTypeID = new SelectList(db.VenueTypes, "ID", "TypeName", venue.VenueTypeID);
-            return View(venue);
-        }
-
-        // GET: Venues/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Venue venue = db.Venues.Find(id);
-            if (venue == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UserID = new SelectList(db.Users, "ID", "FirstName", venue.UserID);
-            ViewBag.VenueTypeID = new SelectList(db.VenueTypes, "ID", "TypeName", venue.VenueTypeID);
-            return View(venue);
-        }
-
-        // POST: Venues/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,VenueName,AddressLine1,AddressLine2,City,State,ZipCode,VenueTypeID,UserID")] Venue venue)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(venue).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.UserID = new SelectList(db.Users, "ID", "FirstName", venue.UserID);
-            ViewBag.VenueTypeID = new SelectList(db.VenueTypes, "ID", "TypeName", venue.VenueTypeID);
-            return View(venue);
-        }
-
-        public ActionResult ViewRatings(int? id)
-        {
-            User user = db.Users.Find(id);
-
-            IEnumerable<Models.Rating> ratings =
-                from r in db.Ratings
-                where r.UserID == user.ID
-                select r;
-
-            return View(ratings);
-        }
-
-        // GET: Venues/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Venue venue = db.Venues.Find(id);
-            if (venue == null)
-            {
-                return HttpNotFound();
-            }
-            return View(venue);
-        }
-
-        // POST: Venues/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Venue venue = db.Venues.Find(id);
-            db.Venues.Remove(venue);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

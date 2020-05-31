@@ -424,25 +424,15 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Home\VenueSearchResults.cshtml" />
-    <Content Include="Views\Venues\Create.cshtml" />
-    <Content Include="Views\Venues\Delete.cshtml" />
     <Content Include="Views\Venues\Details.cshtml" />
-    <Content Include="Views\Venues\Edit.cshtml" />
-    <Content Include="Views\Venues\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\MusicianDetails.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\MusicianIndex.cshtml" />
     <Content Include="Views\Calendar\Schedule.cshtml" />
     <Content Include="client_secret.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Home\MusicianSearchResults.cshtml" />
-    <Content Include="Views\Shows\Create.cshtml" />
-    <Content Include="Views\Shows\Delete.cshtml" />
     <Content Include="Views\Shows\Details.cshtml" />
-    <Content Include="Views\Shows\Edit.cshtml" />
     <Content Include="Views\Shows\MyShows.cshtml" />
     <Content Include="Views\Shows\RateUser.cshtml" />
     <Content Include="Views\Home\ErrorPage.cshtml" />

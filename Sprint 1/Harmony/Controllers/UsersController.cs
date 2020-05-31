@@ -56,13 +56,6 @@ namespace Harmony
             return new UserCredential(flow, userId, token);
         }
 
-        // GET: Users
-        public ActionResult MusicianIndex()
-        {
-            // return View(db.Users.ToList());
-            return View(db.Users.Where(u => u.Genres.Count() != 0).ToList());
-        }
-
         /*******************************************
          *          MUSICIAN PROFILE
          *  *************************************/
@@ -92,24 +85,6 @@ namespace Harmony
 
             return View(viewModel);
         }
-
-        /*public ActionResult CreateShow()
-        {
-            var IdentityID = User.Identity.GetUserId();
-            List<Venue> venues = db.Venues*//*.Where(m => m.User.ASPNetIdentityID == IdentityID)*//*.ToList();
-            List<SelectListItem> venueList = new List<SelectListItem>();
-            foreach(var v in venues)
-            {
-                venueList.Add(new SelectListItem { Text = v.VenueName, Value = v.ID.ToString() });
-            }
-            MusicianDetailViewModel model = new MusicianDetailViewModel
-            {
-                VenueList = venueList
-            };
-            // ViewBag.VenueList = new SelectList(db.Venues/*.Where(m => m.User.ASPNetIdentityID == IdentityID).Select(s => new { VenueID = s.ID, s.VenueName }), "ID", "ID");
-            // ViewData["VenueList"] = new SelectList(venueList, "Value", "Text");
-            return View(model);
-        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -209,97 +184,6 @@ namespace Harmony
             return View(model);
         }
 
-        // GET: Users/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,FirstName,LastName,City,State,Email,Description,ASPNetIdentityID")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(user);
-        }
-
-        // GET: Users/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,City,State,Email,Description,ASPNetIdentityID")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);
-        }
-
-        public ActionResult ViewRatings(int? id)
-        {
-            User user = db.Users.Find(id);
-
-            IEnumerable<Models.Rating> ratings =
-                from r in db.Ratings
-                where r.UserID == user.ID
-                select r;
-
-            return View(ratings);
-        }
-
-        // GET: Users/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
-        // POST: Users/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Harmony.DAL;
+using System.Web.Mvc;
 
 namespace Harmony.Models
 {
@@ -14,6 +15,19 @@ namespace Harmony.Models
 
         public ShowsViewModel() { }
 
+        public ShowsViewModel(Show show)
+        {
+            Title = show.Title;
+            ShowID = show.ID;
+            StartTime = show.StartDateTime;
+            EndTime = show.EndDateTime;
+            DateBooked = show.DateBooked;
+            Description = show.Description;
+            Status = show.Status;
+            VenueName = show.Venue.VenueName;
+            Address = show.Venue.AddressLine1 + " " + show.Venue.AddressLine2 + show.Venue.City + "," + show.Venue.State + " " + show.Venue.ZipCode;
+            MusicianID = db.User_Show.Where(us => us.ShowID == show.ID).FirstOrDefault().MusicianID;
+        }
         public ShowsViewModel(User_Show show)
         {
             Title = show.Show.Title;
@@ -80,12 +94,7 @@ namespace Harmony.Models
         [Display(Name = "VenueAddress")]
         public string Address { get; set; }
 
-        public List<Show> FinishedShows { get; set; } //FinishedShows = db.Shows.Where(s => (s.EndDateTime < DateTime.Now) && (s.Status == "Accepted" || s.Status == "Pending")).ToList();
+        public SelectList VenueList { get; set; }
 
-        public List<Show> UpcomingShows { get; set; }
-
-        public List<Show> CanceledShows { get; set; }
-
-        public List<Show> DeclinedShows { get; set; }
     }
 }
