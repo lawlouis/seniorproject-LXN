@@ -25,6 +25,12 @@ namespace Harmony
             bundles.Add(new ScriptBundle("~/bundles/moment").Include(
                       "~/Scripts/moment.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/caleandar").Include(
+                        "~/Scripts/caleandar.js"));
+
+            bundles.Add(new StyleBundle("~/Content/caleandar").Include(
+                        "~/Content/theme3.css"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
