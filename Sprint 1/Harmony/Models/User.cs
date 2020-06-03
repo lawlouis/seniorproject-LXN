@@ -51,6 +51,8 @@ namespace Harmony.Models
         [StringLength(128)]
         public string ASPNetIdentityID { get; set; }
 
+        public int ProfilePictureID { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Show> User_Show { get; set; }
 
