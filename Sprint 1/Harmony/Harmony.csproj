@@ -240,14 +240,22 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <!--
     <Content Include="App_Data\db_harmony.mdf" />
     <Content Include="App_Data\db_harmony_log.ldf">
       <DependentUpon>db_harmony.mdf</DependentUpon>
     </Content>
     <Content Include="App_Data\down.sql" />
+    <Content Include="App_Data\EmptyHarmony.mdf" />
+    <Content Include="App_Data\EmptyHarmony_log.ldf">
+      <DependentUpon>EmptyHarmony.mdf</DependentUpon>
+    </Content>
+    -->
+    <Content Include="App_Data\down.sql" />
     <Content Include="App_Data\seed.sql" />
     <Content Include="App_Data\test.sql" />
     <Content Include="App_Data\up.sql" />
+    <Content Include="BLM.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -261,6 +269,9 @@
     <Content Include="login.jpg" />
     <Content Include="newbackground.jpg" />
     <Content Include="pacificwhaleslogo.png" />
+    <Content Include="Profiles\female.jpg" />
+    <Content Include="Profiles\male.jpg" />
+    <Content Include="Profiles\nonbinary.png" />
     <Content Include="SavageGarden.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -377,6 +388,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="support.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -456,6 +468,7 @@
     <Content Include="Views\Users\ViewRatings.cshtml" />
     <Content Include="Views\Venues\ViewRatings.cshtml" />
     <Content Include="Views\Manage\EditSocialMedia.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
