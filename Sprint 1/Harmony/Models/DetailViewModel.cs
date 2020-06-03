@@ -28,6 +28,9 @@ namespace Harmony.Models
             Type = venue.VenueType.TypeName;
             UserID = venue.UserID;
             AveRating = venue.User.AveRating;
+            Facebook = venue.User.Facebook;
+            Instagram = venue.User.Instagram;
+            Twitter = venue.User.Twitter;
         }
 
         public int ID { get; set; }
@@ -85,8 +88,14 @@ namespace Harmony.Models
         // public List<SelectListItem> VenueList { get; set; }
         [Display(Name = "Rating")]
         public double AveRating { get; set; }
-
         public SelectList VenueList { get; set; }
+
+        [StringLength(100)]
+        public string Facebook { get; set; }
+        [StringLength(100)]
+        public string Instagram { get; set; }
+        [StringLength(100)]
+        public string Twitter { get; set; }
     }
 
     public class MusicianDetailViewModel
@@ -103,6 +112,12 @@ namespace Harmony.Models
             Description = user.Description;
             Genres = user.Genres.ToList();
             AveRating = user.AveRating;
+            Facebook = user.Facebook;
+            Instagram = user.Instagram;
+            Twitter = user.Twitter;
+            Spotify = user.Spotify;
+            AppleMusic = user.AppleMusic;
+            Youtube = user.Youtube;
         }
 
         public int ID { get; set; }
@@ -144,6 +159,25 @@ namespace Harmony.Models
 
         [Display(Name = "Rating")]
         public double AveRating { get; set; }
+
+        [StringLength(100)]
+        public string Facebook { get; set; }
+
+        [StringLength(100)]
+        public string Instagram { get; set; }
+
+        [StringLength(100)]
+        public string Twitter { get; set; }
+
+        [StringLength(100)]
+        public string Spotify { get; set; }
+
+        [StringLength(100)]
+        [Display(Name = "Apple Music")]
+        public string AppleMusic { get; set; }
+
+        [StringLength(100)]
+        public string Youtube { get; set; }
 
         public List<string> stateList { get; set; }
     }
