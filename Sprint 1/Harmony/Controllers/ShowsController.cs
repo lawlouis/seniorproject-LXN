@@ -297,6 +297,11 @@ namespace Harmony.Controllers
                         {
                             DateTime = viewModel.EndTime.AddHours(7.0),
                             TimeZone = "America/Los_Angeles"
+                        },
+                        Attendees = new List<EventAttendee>()
+                        {
+                            new EventAttendee() { Email = db.Users.Where(u => u.ID == model.MusicianID).FirstOrDefault().Email},
+                            new EventAttendee() { Email = show.Venue.User.Email}
                         }
                     };
                     var newEventRequest = service.Events.Update(updatedEvent, "primary", show.GoogleEventID);
