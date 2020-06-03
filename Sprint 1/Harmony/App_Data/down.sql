@@ -72,8 +72,6 @@ DROP TABLE [dbo].[Musician_Genre]
 
 DROP TABLE [dbo].[Genres]
 
-DROP TABLE [dbo].[Profiles]
-
 /*
 DROP TABLE [dbo].[BandMember_Instrument]
 

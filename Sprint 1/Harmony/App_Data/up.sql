@@ -121,9 +121,6 @@ CREATE TABLE [dbo].[Users]
 
 );
 
-ALTER TABLE [dbo].[Users] ADD
-	[ProfilePictureID]		INT		NULL;
-
 
 --------FOR VENUE OWNERS-----------------------------------
 
@@ -204,17 +201,6 @@ CREATE TABLE [dbo].[Genres]
 	[ID]		INT IDENTITY (1,1)	NOT NULL,
 	[GenreName]		NVARCHAR (50)		NOT NULL,
 	CONSTRAINT [PK_dbo.Genres] PRIMARY KEY CLUSTERED ([ID] ASC)
-);
--- #######################################
--- #            Profile Table             #
--- #######################################
-
-CREATE TABLE [dbo].[Profiles]
-(
-	[ID]		INT IDENTITY (1,1)	NOT NULL,
-	[ProfileGneder]		NVARCHAR (50)		NOT NULL,
-	[Path]		NVARCHAR (50)		NOT NULL,
-	CONSTRAINT [PK_dbo.Profiles] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 
 -- #######################################
@@ -313,3 +299,5 @@ CREATE TABLE [dbo].[Ratings]
 	CONSTRAINT [FK_dbo.Ratings_dbo.Users_ID] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID])
 );
 
+ALTER TABLE [dbo].[Users] ADD
+	[ProfilePictureID]		INT		NULL;
