@@ -77,6 +77,24 @@ namespace Harmony
             VenueOwnerDetailViewModel viewModel = new VenueOwnerDetailViewModel(venue);
             viewModel.UpcomingShows = db.User_Show.Where(u => u.VenueOwnerID == venue.UserID).Select(s => s.Show).Where(s => s.StartDateTime > DateTime.Now && s.Status == "Accepted").OrderByDescending(s => s.EndDateTime).ToList();
             viewModel.VenueList = new SelectList(db.Venues.Where(v => v.User.ID == venue.ID), "ID", "VenueName");
+
+            User user = db.Users.Find(identityID);
+
+            string profilePath = "";
+            if (user.ProfilePictureID == 1)
+            {
+                profilePath = "/Profiles/male.jpg";
+            }
+            else if (user.ProfilePictureID == 2)
+            {
+                profilePath = "/Profiles/female.jpg";
+            }
+            else if (user.ProfilePictureID == 3)
+            {
+                profilePath = "/Profiles/nonbinary.jpg";
+            }
+            ViewBag.ProfilePath = profilePath;
+
             return View(viewModel);
         }
 

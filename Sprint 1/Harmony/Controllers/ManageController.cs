@@ -212,6 +212,20 @@ namespace Harmony.Controllers
                 model.MyGenres = user.Genres.ToList();
             };
             
+            string profilePath = "";
+            if (user.ProfilePictureID == 1)
+            {
+                profilePath = "/Profiles/male.jpg";
+            }
+            else if (user.ProfilePictureID == 2)
+            {
+                profilePath = "/Profiles/female.jpg";
+            }
+            else if (user.ProfilePictureID == 3)
+            {
+                profilePath = "/Profiles/nonbinary.jpg";
+            }
+            ViewBag.ProfilePath = profilePath;
             return View(model);
         }
 

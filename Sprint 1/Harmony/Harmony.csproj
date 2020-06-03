@@ -244,6 +244,7 @@
     <Content Include="App_Data\seed.sql" />
     <Content Include="App_Data\test.sql" />
     <Content Include="App_Data\up.sql" />
+    <Content Include="BLM.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -260,6 +261,9 @@
     <Content Include="login.jpg" />
     <Content Include="newbackground.jpg" />
     <Content Include="pacificwhaleslogo.png" />
+    <Content Include="Profiles\female.jpg" />
+    <Content Include="Profiles\male.jpg" />
+    <Content Include="Profiles\nonbinary.png" />
     <Content Include="SavageGarden.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -378,6 +382,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="support.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -447,6 +452,7 @@
     <Content Include="Views\Users\ViewRatings.cshtml" />
     <Content Include="Views\Venues\ViewRatings.cshtml" />
     <Content Include="Views\Manage\EditSocialMedia.cshtml" />
+    <Content Include="Views\Home\FAQ.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

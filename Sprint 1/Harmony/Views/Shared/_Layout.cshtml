@@ -30,7 +30,20 @@
                             <a class="nav-link" href="~/Home/Credits" style="font-size:larger">Credits</a>
                         </li>
                     </ul>
-                    @Html.Partial("_LoginPartial") @*<---  DO NOT DELETE THIS LINE PLEASE!*@
+                    <div class="collapse navbar-collapse" id="navbarColor02">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Home/Credits" style="font-size:larger">Credits</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Home/FAQ" style="font-size:larger">FAQ</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="~/Home/Contact" style="font-size:larger">Contact Us</a>
+                            </li>
+                        </ul>
+                        @Html.Partial("_LoginPartial") @*<---  DO NOT DELETE THIS LINE PLEASE!*@
+                    </div>
                 </div>
             </div>
         </nav>

@@ -442,6 +442,13 @@ namespace Harmony.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+
+                    List<string> genders = new List<string>();
+                    genders.Add("Male");
+                    genders.Add("Female");
+                    genders.Add("Non Binary");
+                    ViewBag.Categories = genders;
+
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email , stateList = ReadAllStatesFromJSON()});
             }
         }
@@ -451,7 +458,7 @@ namespace Harmony.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl, string Gender)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -475,6 +482,21 @@ namespace Harmony.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         await this.UserManager.AddToRoleAsync(user.Id, model.Role);
+
+                        int GID = 0;
+                        switch (Gender)
+                        {
+                            case "Male":
+                                GID = 1;
+                                break;
+                            case "Female":
+                                GID = 2;
+                                break;
+                            case "Non Binary":
+                                GID = 3;
+                                break;
+                        }
+
                         User HarmonyUser = new User
                         {
                             FirstName = model.FirstName,
@@ -483,7 +505,8 @@ namespace Harmony.Controllers
                             City = model.City,
                             State = model.State,
                             Description = model.Description,
-                            ASPNetIdentityID = user.Id
+                            ASPNetIdentityID = user.Id,
+                            ProfilePictureID = GID
                         };
                         db.Users.Add(HarmonyUser);
 

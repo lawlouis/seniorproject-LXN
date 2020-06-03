@@ -96,14 +96,15 @@
 
                     <dd>@Html.ActionLink("View Shows", "MyShows", "Shows")</dd>
                 </dl>
-                
+
             </div>
 
             <div class="col-md-5">
                 <div>
-                    <img src="~/singer.jpg" id="musicianprofilepic" />
+                    <img src="@ViewBag.ProfilePath">
                 </div>
             </div>
+
             <div class="col-md-2 offset-1">
                 <h5>Social Media</h5>
                 <a href="https://www.facebook.com/@Model.Facebook" style="color: black"><i class="fa fa-facebook" aria-hidden="true"></i></a>

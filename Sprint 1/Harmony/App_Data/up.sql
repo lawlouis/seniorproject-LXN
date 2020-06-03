@@ -113,6 +113,7 @@ CREATE TABLE [dbo].[Users]
 	[Description]		NVARCHAR (300)		NULL,
 	[AveRating]		FLOAT(35)	NOT NULL	DEFAULT 0.0,
 	-- [RoleID]		INT		NOT NULL,
+	--[ProfileID] NVARCHAR (128) NOT NULL,
 	[Facebook]		NVARCHAR (50)	NULL,
 	[Instagram]		NVARCHAR (50)	NULL,
 	[Twitter]		NVARCHAR (50)	NULL,
@@ -121,9 +122,11 @@ CREATE TABLE [dbo].[Users]
 	[Youtube]		NVARCHAR (50)	NULL,
 	[ASPNetIdentityID] NVARCHAR (128) NOT NULL,			-- Id into Identity User table, but NOT a FK on purpose
 	CONSTRAINT [PK_dbo.Users] PRIMARY KEY CLUSTERED ([ID] ASC)
+	--CONSTRAINT [FK_dbo.Profiles_dbo.Profile_ID] FOREIGN KEY ([ProfileID]) REFERENCES [dbo].[Profiles] ([ID]),
 	-- CONSTRAINT [FK_dbo.Users_dbo.Roles_ID] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[Roles] ([ID])
 
 );
+
 
 --------FOR VENUE OWNERS-----------------------------------
 
@@ -301,4 +304,8 @@ CREATE TABLE [dbo].[Ratings]
 	CONSTRAINT [PK_dbo.Ratings] PRIMARY KEY CLUSTERED ([ID] ASC),
 	CONSTRAINT [FK_dbo.Ratings_dbo.Users_ID] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID])
 );
+
+ALTER TABLE [dbo].[Users] ADD
+	[ProfilePictureID]		INT		NULL;
+
 
