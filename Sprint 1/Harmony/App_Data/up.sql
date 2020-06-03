@@ -307,3 +307,5 @@ CREATE TABLE [dbo].[Ratings]
 
 ALTER TABLE [dbo].[Users] ADD
 	[ProfilePictureID]		INT		NULL;
+
+

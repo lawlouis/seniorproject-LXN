@@ -240,7 +240,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-  <!--
+    <!--
     <Content Include="App_Data\db_harmony.mdf" />
     <Content Include="App_Data\db_harmony_log.ldf">
       <DependentUpon>db_harmony.mdf</DependentUpon>
@@ -251,6 +251,7 @@
       <DependentUpon>EmptyHarmony.mdf</DependentUpon>
     </Content>
     -->
+    <Content Include="App_Data\down.sql" />
     <Content Include="App_Data\seed.sql" />
     <Content Include="App_Data\test.sql" />
     <Content Include="App_Data\up.sql" />
