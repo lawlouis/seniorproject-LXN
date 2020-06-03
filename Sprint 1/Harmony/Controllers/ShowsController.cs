@@ -151,16 +151,12 @@ namespace Harmony.Controllers
                         {
                             DateTime = viewModel.EndTime.AddHours(7.0),
                             TimeZone = "America/Los_Angeles"
-                        },
-                        Attendees = new List<EventAttendee>()
-                        {
-                            new EventAttendee() { Email = show.Venue.User.Email },
-                            new EventAttendee() { Email = db.Users.Where(u => u.ID == model.MusicianID).FirstOrDefault().Email }
                         }
                     };
                     var newEventRequest = service.Events.Update(updatedEvent, "primary", show.GoogleEventID);
                     // This allows attendees to get email notification
                     newEventRequest.SendNotifications = true;
+                    newEventRequest.SendUpdates = 0;
                     var eventResult = newEventRequest.Execute();
 
                     // add the new show to db
