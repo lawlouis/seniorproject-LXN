@@ -208,27 +208,6 @@
                 <div id="caleandar">
 
                 </div>
-                @*<table>
-                        <tr>
-                            <th>Event</th>
-                            <th>Date</th>
-                            <th>Duration</th>
-                        </tr>
-
-                        <!-------------------------- DISPLAYING EVENTS ----------------------->
-                        @foreach (var group in Model.UpcomingEvents)
-                        {
-                            foreach (var evt in group.Events)
-                            {
-                                <tr>
-                                    <td>@evt.Summary</td>
-                                    <td>@FormatEventTime(evt.Start)</td>
-                                    <td>@FormatEventLength(evt.Start, evt.End)</td>
-                                </tr>
-                            }
-
-                        }
-                    </table>*@
             </div>
         </div>
     </div>
@@ -238,15 +217,13 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/caleandar")
     <script>
-        $().ready(function () {
-            $.ajax({
-                type: 'GET',
-                datatype: 'json',
-                url: '/api/events',
-                success: getEvent,
-                error: errorOnAjax
-            });
-        })
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '/api/events',
+            success: getEvent,
+            error: errorOnAjax
+        });
         var events = [];
 
         function errorOnAjax() {
