@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[Users]
 	[Description]		NVARCHAR (300)		NULL,
 	[AveRating]		FLOAT(35)	NOT NULL	DEFAULT 0.0,
 	-- [RoleID]		INT		NOT NULL,
-	--[ProfileID] NVARCHAR (128) NOT NULL,
+	[ProfilePictureID]		INT		NULL,
 	[Facebook]		NVARCHAR (50)	NULL,
 	[Instagram]		NVARCHAR (50)	NULL,
 	[Twitter]		NVARCHAR (50)	NULL,
@@ -305,6 +305,9 @@ CREATE TABLE [dbo].[Ratings]
 	CONSTRAINT [FK_dbo.Ratings_dbo.Users_ID] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([ID])
 );
 
+-- #######################################
+-- #       Adding Entity to a Table      #
+-- #######################################
 ALTER TABLE [dbo].[Users] ADD
 	[ProfilePictureID]		INT		NULL;
 
