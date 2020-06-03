@@ -89,6 +89,84 @@ namespace Harmony.Controllers
             var token = await dataStore.GetAsync<TokenResponse>(userId);
             return new UserCredential(flow, userId, token);
         }
+
+        public async Task<JsonResult> MySchedule()
+        {
+            // Get user's calendar credentials
+            const int MaxEventsPerCalendar = 20;
+            const int MaxEventsOverall = 40;
+
+            var credential = await GetCredentialForApiAsync();
+
+            var initializer = new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "Harmony",
+            };
+            var service = new CalendarService(initializer);
+
+            // Fetch the list of calendars.
+            var calendars = await service.CalendarList.List().ExecuteAsync();
+
+            // Fetch some events from each calendar.
+            var fetchTasks = new List<Task<Google.Apis.Calendar.v3.Data.Events>>(calendars.Items.Count);
+            foreach (var calendar in calendars.Items)
+            {
+                var request = service.Events.List(calendar.Id);
+                request.MaxResults = MaxEventsPerCalendar;
+                request.SingleEvents = true;
+                request.TimeMin = DateTime.Now;
+                fetchTasks.Add(request.ExecuteAsync());
+            }
+            var fetchResults = await Task.WhenAll(fetchTasks);
+
+            // Sort the events and put them in the model.
+            var upcomingEvents = from result in fetchResults
+                                 from evt in result.Items
+                                 where evt.Start != null
+                                 let date = evt.Start.DateTime.HasValue ?
+                                     evt.Start.DateTime.Value.Date :
+                                     DateTime.ParseExact(evt.Start.Date, "yyyy-MM-dd", null)
+                                 let sortKey = evt.Start.DateTimeRaw ?? evt.Start.Date
+                                 orderby sortKey
+                                 select new { evt, date };
+            var eventsByDate = from result in upcomingEvents.Take(MaxEventsOverall)
+                               group result.evt by result.date into g
+                               orderby g.Key
+                               select g;
+
+            // Days in the next week
+            // int thisWeek = DateTime.Now.DayOfYear + 7;
+            List<object> eventlist = new List<object>();
+            var eventGroups = new List<CalendarEventGroup>();
+            foreach(var evt in upcomingEvents)
+            {
+                eventlist.Add(new
+                {
+                    Day = evt.date.Day,
+                    Month = evt.date.Month,
+                    Year = evt.date.Year,
+                    Title = evt.evt.Summary,
+                    link = evt.evt.HtmlLink
+                });
+            }
+            /*foreach (var grouping in eventsByDate)
+            {
+                // Adding event to model if they are scheduled for the next week
+                *//*if (grouping.Key.DayOfYear <= thisWeek)
+                {
+                    
+                }*//*
+                eventGroups.Add(new CalendarEventGroup
+                {
+                    GroupTitle = grouping.Key.ToLongDateString(),
+                    Events = grouping,
+                });
+            }*/
+            
+            return Json(eventlist, JsonRequestBehavior.AllowGet);
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)

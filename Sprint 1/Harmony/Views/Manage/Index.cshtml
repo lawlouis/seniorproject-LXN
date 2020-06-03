@@ -1,12 +1,16 @@
 ﻿@model Harmony.Models.IndexViewModel
 @using CalendarData = Google.Apis.Calendar.v3.Data;
+
+@section head{
+    <link rel="stylesheet" href="~/Content/theme3.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+}
+
 @{
     ViewBag.Title = "Manage";
 }
 
 <!-- Social media icons -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
 <style>
     i {
         padding-right: 8px;
@@ -140,32 +144,32 @@
                             @Html.ActionLink("Manage", "ManageLogins") ]
                         </dd>
                         @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+                            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
-                See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+                                See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
 
-                Uncomment the following block after you have set up two-factor authentication
+                                Uncomment the following block after you have set up two-factor authentication
                         *@
                         @*
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
+                            <dt>Phone Number:</dt>
+                            <dd>
+                                @(Model.PhoneNumber ?? "None")
+                                @if (Model.PhoneNumber != null)
+                                {
+                                    <br />
+                                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+                                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
+                                    }
+                                }
+                                else
+                                {
+                                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+                                }
+                            </dd>
                         *@
                         <dt>Two-Factor Authentication:</dt>
                         <dd>
@@ -174,89 +178,105 @@
                                 for details on setting up this ASP.NET application to support two-factor authentication.
                             </p>
                             @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
+                                {
+                                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <text>Enabled
+                                        <input type="submit" value="Disable" class="btn btn-link" />
+                                        </text>
+                                    }
+                                }
+                                else
+                                {
+                                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <text>Disabled
+                                        <input type="submit" value="Enable" class="btn btn-link" />
+                                        </text>
+                                    }
+                                }*@
                         </dd>
                     </dl>
                 </div>
             </div>
         </div>
-            <!------------------------------- HELPERS FOR FORMATTING EVENTS -------------------------------->
-            @helper FormatEventTime(CalendarData.EventDateTime when)
-            {
-                // Either Date or DateTime is set, depending on whether or not the event is
-                // an all-day event.
-                if (when.DateTime == null)
-                {
-                    <text>All day</text>
-                }
-                else
-                {
-                    @:@when.DateTime.Value.ToShortTimeString()
-                }
-            }
-            @helper FormatEventLength(CalendarData.EventDateTime start, CalendarData.EventDateTime end)
-            {
-                var duration = end.DateTime - start.DateTime;
-                if (duration == null)
-                {
-                    <text>All day</text>
-                }
-                else
-                {
-                    @:@string.Format(
-                    "{0} hour{1} {2} minute{3}",
-                    (int)duration.Value.TotalHours,
-                    duration.Value.TotalHours >= 2 ? "s" : "",
-                    (int)duration.Value.Minutes,
-                    duration.Value.Minutes >= 2 ? "s" : "")
-                }
-            }
         <div class="row">
             <div class="col-md-12">
                 <h5>Availability</h5>
-                <table>
-                    <tr>
-                        <th>Event</th>
-                        <th>Date</th>
-                        <th>Duration</th>
-                    </tr>
+                <div id="caleandar">
 
-                    <!-------------------------- DISPLAYING EVENTS ----------------------->
-                    @foreach (var group in Model.UpcomingEvents)
-                    {
-                        foreach (var evt in group.Events)
+                </div>
+                @*<table>
+                        <tr>
+                            <th>Event</th>
+                            <th>Date</th>
+                            <th>Duration</th>
+                        </tr>
+
+                        <!-------------------------- DISPLAYING EVENTS ----------------------->
+                        @foreach (var group in Model.UpcomingEvents)
                         {
-                            <tr>
-                                <td>@evt.Summary</td>
-                                <td>@FormatEventTime(evt.Start)</td>
-                                <td>@FormatEventLength(evt.Start, evt.End)</td>
-                            </tr>
-                        }
+                            foreach (var evt in group.Events)
+                            {
+                                <tr>
+                                    <td>@evt.Summary</td>
+                                    <td>@FormatEventTime(evt.Start)</td>
+                                    <td>@FormatEventLength(evt.Start, evt.End)</td>
+                                </tr>
+                            }
 
-                    }
-                </table>
+                        }
+                    </table>*@
             </div>
         </div>
     </div>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/caleandar")
+    <script>
+        $().ready(function () {
+            $.ajax({
+                type: 'GET',
+                datatype: 'json',
+                url: '/api/events',
+                success: getEvent,
+                error: errorOnAjax
+            });
+        })
+        var events = [];
+
+        function errorOnAjax() {
+            console.log('Error on AJAX return');
+        }
+
+        function getEvent(data) {
+            for (i = 0; i < data.length; i++) {
+                events.push({
+                    'Date': new Date(data[i].Year, (data[i].Month - 1), data[i].Day),
+                    'Title': data[i].Title,
+                    'Link': data[i].link
+                    //"'Date': new Date(" + data[i].Year + ", " + (data[i].Month - 1) + ", " + data[i].Day + "), 'Title': '" + data[i].Title + "'"
+                });
+            }
+        }
+        
+        var settings = {
+            LinkColor: '#fd7e14',
+            NavShow: true,                //(bool) show navigation arrows.
+            NavVertical: false,           //(bool) show previous and coming months.
+            NavLocation: '#foo',          //(string - element) where to display navigation, if not in default position.
+            DateTimeShow: true,           //(bool) show current date.
+            DateTimeFormat: 'mmm, yyyy',  //(string - dateformat) format previously mentioned date is shown in.
+            DatetimeLocation: '',         //(string - element) where to display previously mentioned date, if not in default position.
+            EventClick: '',     //(function) a function that should instantiate on the click of any event. parameters passed in via data link attribute.
+            EventTargetWholeDay: false,   //(bool) clicking on the whole date will trigger event action, as opposed to just clicking on the title.
+            DisabledDays: []       //(array of objects) new data object to pass into calendar (serving suggestion: passing through only the currently selected month's events if working with large dataset.
+        };
+        var element = document.getElementById('caleandar');
+        caleandar(element, events, settings);
+    </script>
 }
