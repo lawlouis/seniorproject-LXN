@@ -70,7 +70,7 @@ DROP TABLE [dbo].[Photos]
 
 DROP TABLE [dbo].[Musician_Genre]
 
-DROP TABLE [dbo].[Genres]
+DROP TABLE [dbo].[Genres] 
 
 /*
 DROP TABLE [dbo].[BandMember_Instrument]

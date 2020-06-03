@@ -113,7 +113,13 @@ CREATE TABLE [dbo].[Users]
 	[Description]		NVARCHAR (300)		NULL,
 	[AveRating]		FLOAT(35)	NOT NULL	DEFAULT 0.0,
 	-- [RoleID]		INT		NOT NULL,
-	--[ProfileID] NVARCHAR (128) NOT NULL,	
+	--[ProfileID] NVARCHAR (128) NOT NULL,
+	[Facebook]		NVARCHAR (50)	NULL,
+	[Instagram]		NVARCHAR (50)	NULL,
+	[Twitter]		NVARCHAR (50)	NULL,
+	[Spotify]		NVARCHAR (50)	NULL,
+	[AppleMusic]	NVARCHAR (50)	NULL,
+	[Youtube]		NVARCHAR (50)	NULL,
 	[ASPNetIdentityID] NVARCHAR (128) NOT NULL,			-- Id into Identity User table, but NOT a FK on purpose
 	CONSTRAINT [PK_dbo.Users] PRIMARY KEY CLUSTERED ([ID] ASC)
 	--CONSTRAINT [FK_dbo.Profiles_dbo.Profile_ID] FOREIGN KEY ([ProfileID]) REFERENCES [dbo].[Profiles] ([ID]),
