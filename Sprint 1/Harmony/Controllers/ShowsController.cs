@@ -305,7 +305,7 @@ namespace Harmony.Controllers
                     newEventRequest.SendUpdates = 0;
                     var eventResult = newEventRequest.Execute();
 
-                    // add the new show to db
+                    // change the show details
                     show.Title = viewModel.Title;
                     show.StartDateTime = viewModel.StartTime;
                     show.EndDateTime = viewModel.EndTime;

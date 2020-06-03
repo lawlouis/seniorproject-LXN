@@ -25,6 +25,7 @@ namespace Harmony.Models
             Description = show.Description;
             Status = show.Status;
             VenueName = show.Venue.VenueName;
+            ShowOwnerID = show.ShowOwnerID;
             Address = show.Venue.AddressLine1 + " " + show.Venue.AddressLine2 + show.Venue.City + "," + show.Venue.State + " " + show.Venue.ZipCode;
             MusicianID = db.User_Show.Where(us => us.ShowID == show.ID).FirstOrDefault().MusicianID;
         }
@@ -38,6 +39,7 @@ namespace Harmony.Models
             EndTime = show.Show.EndDateTime;
             DateBooked = show.Show.DateBooked;
             Description = show.Show.Description;
+            ShowOwnerID = show.Show.ShowOwnerID;
             Status = show.Show.Status;
 
             VenueName = (from v in db.Venues
@@ -63,6 +65,8 @@ namespace Harmony.Models
 
         [Display(Name = "Show ID")]
         public int ShowID { get; set; }
+
+        public int ShowOwnerID { get; set; }
 
         public bool? MusicianRated { get; set; }
 

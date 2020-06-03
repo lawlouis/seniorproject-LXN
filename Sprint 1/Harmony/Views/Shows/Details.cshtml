@@ -4,7 +4,14 @@
     ViewBag.Title = "Details";
 }
 
-
+@using Microsoft.AspNet.Identity
+@using Harmony.DAL
+@using Harmony.Models
+@{ 
+    HarmonyContext db = new HarmonyContext();
+    var identityID = User.Identity.GetUserId();
+    var userID = db.Users.Where(u => u.ASPNetIdentityID == identityID).FirstOrDefault().ID;
+}
 
 <div class="container black-font">
     <div class="row" id="myprofile">
@@ -73,10 +80,13 @@
                     <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#cancelModal">
                         Cancel This Show!
                     </button>
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-sm btn-orange" data-toggle="modal" data-target="#editModal">
-                        Edit
-                    </button>
+                    @if(userID == Model.ShowOwnerID)
+                    {
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-sm btn-orange" data-toggle="modal" data-target="#editModal">
+                            Edit
+                         </button>
+                    }
                 </div>
             }
         </div>

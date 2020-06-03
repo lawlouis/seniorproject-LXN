@@ -139,7 +139,8 @@ namespace Harmony
                         Attendees = new List<EventAttendee>()
                         {
                             new EventAttendee(){Email = model.OwnerEmail}
-                        }
+                        },
+                        GuestsCanModify = true
                     };
                     var newEventRequest = service.Events.Insert(newEvent, "primary");
                     // This allows attendees to get email notification
@@ -177,6 +178,18 @@ namespace Harmony
             }
 
             return View(model);
+        }
+
+        public ActionResult ViewRatings(int? id)
+        {
+            User user = db.Users.Find(id);
+
+            IEnumerable<Models.Rating> ratings =
+                from r in db.Ratings
+                where r.UserID == user.ID
+                select r;
+
+            return View(ratings);
         }
         protected override void Dispose(bool disposing)
         {
