@@ -113,7 +113,7 @@ CREATE TABLE [dbo].[Users]
 	[Description]		NVARCHAR (300)		NULL,
 	[AveRating]		FLOAT(35)	NOT NULL	DEFAULT 0.0,
 	-- [RoleID]		INT		NOT NULL,
-	[ProfilePictureID]		INT		NULL,
+	[ProfilePictureID]		INT		NULL       DEFAULT 0,
 	[Facebook]		NVARCHAR (50)	NULL,
 	[Instagram]		NVARCHAR (50)	NULL,
 	[Twitter]		NVARCHAR (50)	NULL,
@@ -308,7 +308,7 @@ CREATE TABLE [dbo].[Ratings]
 -- #######################################
 -- #       Adding Entity to a Table      #
 -- #######################################
-ALTER TABLE [dbo].[Users] ADD
-	[ProfilePictureID]		INT		NULL;
+/*ALTER TABLE [dbo].[Users] ADD
+	[ProfilePictureID]		INT		NULL;*/
 
 

@@ -78,7 +78,7 @@ namespace Harmony
             viewModel.UpcomingShows = db.User_Show.Where(u => u.VenueOwnerID == venue.UserID).Select(s => s.Show).Where(s => s.StartDateTime > DateTime.Now && s.Status == "Accepted").OrderByDescending(s => s.EndDateTime).ToList();
             viewModel.VenueList = new SelectList(db.Venues.Where(v => v.User.ID == venue.ID), "ID", "VenueName");
 
-            User user = db.Users.Find(identityID);
+            User user = db.Users.Find(id);
 
             string profilePath = "";
             if (user.ProfilePictureID == 1)
