@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 
 namespace Harmony
 {
+    [Authorize]
     public class VenuesController : Controller
     {
         private HarmonyContext db = new HarmonyContext();
