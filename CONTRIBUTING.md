@@ -34,6 +34,7 @@
 * PLEASE document you code; even a short note will be helpful
 
 ## Database Design
+[![](https://github.com/lawlouis/seniorproject-PacificWhales/blob/master/docs/Harmony%20ERD.png)](https://app.lucidchart.com/documents/edit/0b6d1f21-a952-464e-b341-ced81fd391ab/0_0"")
 * Table names should be plural, e.g `Users`
 * Each table should have a **primary key** named `id` in lowercase
 * Name all the **foreign keys** `<Entity>ID`, e.g. `UserID`
