@@ -82,7 +82,7 @@ namespace Harmony
             viewModel.UpcomingShows = db.User_Show.Where(u => u.MusicianID == user.ID).Select(s => s.Show).Where(s => s.StartDateTime > DateTime.Now && s.Status == "Accepted").OrderByDescending(s => s.EndDateTime).ToList();
             viewModel.VenueList = new SelectList(db.Venues.Where(v => v.User.ASPNetIdentityID == IdentityID), "ID", "VenueName");
 
-            /*string profilePath = "";
+            string profilePath = "";
             if(user.ProfilePictureID == 1) 
             {
                 profilePath = "/Profiles/male.jpg";
@@ -95,7 +95,7 @@ namespace Harmony
             {
                 profilePath = "/Profiles/nonbinary.jpg";
             }
-            ViewBag.ProfilePath = profilePath;*/
+            ViewBag.ProfilePath = profilePath;
 
             return View(viewModel);
         }
