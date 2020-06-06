@@ -69,8 +69,8 @@ namespace Calendar.ASP.NET.MVC5
             var google = new GoogleOAuth2AuthenticationOptions()
             {
                 AccessType = "offline",     // Request a refresh token.
-                ClientId = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientId"],
-                ClientSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientSecret"],
+                ClientId = MyClientSecrets.ClientId,
+                ClientSecret = MyClientSecrets.ClientSecret,
                 Provider = new GoogleOAuth2AuthenticationProvider()
                 {
                     OnAuthenticated = async context =>

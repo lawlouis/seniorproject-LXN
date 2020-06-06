@@ -38,9 +38,8 @@ namespace Harmony
             {
                 ClientSecrets = new ClientSecrets
                 {
-
-                    ClientId = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientId"],
-                    ClientSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientSecret"],
+                    ClientId = MyClientSecrets.ClientId,
+                    ClientSecret = MyClientSecrets.ClientSecret,
                 },
                 Scopes = MyRequestedScopes.Scopes,
             };
