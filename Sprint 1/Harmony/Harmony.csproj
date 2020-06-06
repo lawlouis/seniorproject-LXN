@@ -290,9 +290,6 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\states_hash.json" />
-    <Content Include="credentials.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\PublishProfiles\harmony2 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\HarmonyDev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -433,9 +430,6 @@
     <Content Include="Views\Users\MusicianDetails.cshtml" />
     <Content Include="Views\Users\MusicianIndex.cshtml" />
     <Content Include="Views\Calendar\Schedule.cshtml" />
-    <Content Include="client_secret.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Views\Home\MusicianSearchResults.cshtml" />
     <Content Include="Views\Shows\Details.cshtml" />
     <Content Include="Views\Shows\MyShows.cshtml" />
