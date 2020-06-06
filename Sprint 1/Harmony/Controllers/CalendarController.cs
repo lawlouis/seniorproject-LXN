@@ -37,8 +37,8 @@ namespace Calendar.ASP.NET.MVC5.Controllers
             {
                 ClientSecrets = new ClientSecrets
                 {
-                    ClientId = MyClientSecrets.ClientId,
-                    ClientSecret = MyClientSecrets.ClientSecret,
+                    ClientId = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientId"],
+                    ClientSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientSecret"],
                 },
                 Scopes = MyRequestedScopes.Scopes,
             };

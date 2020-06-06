@@ -63,14 +63,14 @@ namespace Calendar.ASP.NET.MVC5
             //   consumerKey: "",
             //   consumerSecret: "");
             app.UseFacebookAuthentication(
-               appId: "1076805802680549",
-              appSecret: "eb1862210555dc08a0035bb9acda74be");
+               appId: System.Web.Configuration.WebConfigurationManager.AppSettings["Facebook_appId"],
+              appSecret: System.Web.Configuration.WebConfigurationManager.AppSettings["Facebook_appSecret"]);
             
             var google = new GoogleOAuth2AuthenticationOptions()
             {
                 AccessType = "offline",     // Request a refresh token.
-                ClientId = MyClientSecrets.ClientId,
-                ClientSecret = MyClientSecrets.ClientSecret,
+                ClientId = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientId"],
+                ClientSecret = System.Web.Configuration.WebConfigurationManager.AppSettings["Google_ClientSecret"],
                 Provider = new GoogleOAuth2AuthenticationProvider()
                 {
                     OnAuthenticated = async context =>
