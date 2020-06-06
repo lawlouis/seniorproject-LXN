@@ -337,4 +337,3 @@ Web_deploy.config
 # With client secrets for API
 credentials.json
 client_secret.json
-MyClientSecrets.cs
