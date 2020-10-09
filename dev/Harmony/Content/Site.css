@@ -1,8 +1,7 @@
 ﻿body {
     /*padding-top: 50px;
     padding-bottom: 20px;*/
-    background: linear-gradient(to bottom right, navy, deepskyblue, aqua) no-repeat center fixed;
-    opacity: 0.85;
+    background: #2e2e2e;
     background-size: cover;
 }
 
@@ -42,9 +41,7 @@ textarea {
     
 }
 nav {
-    background-color: lightsalmon;
-    opacity: 0.9;
-    border-bottom: ridge;
+    background-color: #2e2e2e;
 }
 
 .nav-link {
@@ -58,7 +55,7 @@ nav {
 }
 
 .nav-link:hover {
-    color: lightskyblue;
+    color: white;
 }
 
 .btn-skyblue{

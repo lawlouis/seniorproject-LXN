@@ -335,5 +335,6 @@ ASALocalRun/
 Web_deploy.config
 
 # With client secrets for API
+app_settings.json
 credentials.json
 client_secret.json
