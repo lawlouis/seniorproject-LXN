@@ -8,7 +8,7 @@
 
 ## Developers (whales:whale:) in Pacific 
 Link to profile
-* [Louis Law](https://github.com/lawlouis)
+* [Louis Law](https://github.com/louislaaaw)
 * [Penny Yang](https://github.com/Penny993131)
 * [Nicole Geiger](https://github.com/ngeiger19)
 
@@ -16,7 +16,7 @@ Link to profile
 For musicians and venue owners who need an easier way to book shows, Harmony is a useful web application that will allow musicians and venue owners to search for and contact each other. This will make for a much smoother booking process and will aid venue owners and musicians in discovering one another. It will be helpful to musicians who play shows as a main source of income, as well those who are just starting out and lack experience. Unlike other booking websites, our product will be truly representative of, and useful to, independent musicians in the Salem area.
 
 ### Status
-We barely started, still on a very early stage
+Currently Paused 
 
 ### Software Construction Processes
 [Disciplined Agile Delivery (DAD)](https://en.wikipedia.org/wiki/Disciplined_agile_delivery) is a people-first, learning-oriented hybrid agile approach to IT solution delivery. It has a risk-value delivery lifecycle, is goal-driven, is enterprise aware, and is scalable.
